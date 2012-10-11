@@ -1,0 +1,144 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/days"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:id="@+id/buffer" >
+        </TextView>
+
+        <TextView
+            style = "@style/DayFont"
+            android:text="Mon" >
+        </TextView>
+        <TextView
+            style = "@style/DayFont"
+            android:text="Tue" >
+        </TextView>
+        <TextView
+            style = "@style/DayFont"
+            android:text="Wed" >
+        </TextView>
+        <TextView
+            style = "@style/DayFont"
+            android:text="Thu" >
+        </TextView>
+        <TextView
+            style = "@style/DayFont"
+            android:text="Fri" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/days"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/Time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical" >
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="07:30"
+                android:id="@+id/sample_subject" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="08:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="09:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="10:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="11:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="13:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="14:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="15:30" >
+            </TextView>
+
+            <TextView
+                style="@style/TimeFont"
+                android:text="16:30" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Monday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Tuesday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Wednesday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Thursday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Friday"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

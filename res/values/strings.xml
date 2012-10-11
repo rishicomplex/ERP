@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="app_name">ERP</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="time_table_activity">Time Table</string>
+    <string name="title_activity_login">ERP on Android</string>
+	<string name="username">Username</string>
+	<string name="password">Password</string>
+	<string name="roll_no">Roll Number</string>
+	<string name="login">Login</string>
+	<string name="security_question">Security Question</string>
+	<string name="show_cred">Show Credentials</string>
+	<string name="login_error">Error Logging In</string>
+</resources>

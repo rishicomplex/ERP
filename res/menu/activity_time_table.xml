@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_refresh" 
+        android:title="Refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="1"
+  		android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_refresh_progress"
+      android:actionLayout="@layout/loading"
+      android:showAsAction="always"
+      android:visible="false" />
+            	
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:orderInCategory="2"
+        android:showAsAction="never" />
+    
+    <item android:id="@+id/menu_sign_out" 
+        android:title="Sign Out"
+        android:orderInCategory="3"
+  		android:showAsAction="ifRoom" />
+  		
+    
+</menu>
