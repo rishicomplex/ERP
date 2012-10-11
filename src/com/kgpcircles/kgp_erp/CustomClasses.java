@@ -91,7 +91,7 @@ class SubjectSlot implements Serializable {
 
 class CustomClasses {
 
-	private static final String ERP_URL = "https://www.google.com/";
+	private static final String ERP_URL = "https://erp.iitkgp.ernet.in/";
 	// "https://erp.iitkgp.ernet.in/IIT_ERP2";
 	private static final String ERP_REDIRECT_URL = "https://erp.iitkgp.ernet.in/IIT_ERP2/welcome.jsp";
 	private static final String ERP_LOGIN_URL = "https://erp.iitkgp.ernet.in/SSOAdministration/auth.htm";
@@ -247,7 +247,7 @@ class CustomClasses {
 					.getAbsolutePath()));
 			return true;
 		} catch (Exception e) {
-			Log.d("Error", "Caught Exception");
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -264,14 +264,18 @@ class CustomClasses {
 		if (isNetworkAvailable(context)) {
 			try {
 				HttpURLConnection urlc = (HttpURLConnection) (new URL(
-						"http://www.google.com").openConnection());
+						"http://iitkgp.ac.in").openConnection());
 				urlc.setRequestProperty("User-Agent", "Test");
 				urlc.setRequestProperty("Connection", "close");
 				urlc.setConnectTimeout(15000);
 				urlc.connect();
-				return (urlc.getResponseCode() == 200);
+				if (urlc.getResponseCode() == 200) {
+					Log.d("Update", "Able to connect to iitkgp.ac.in");
+					return true;
+				}
 			} catch (IOException e) {
-				Log.e("Error", "Error checking internet connection", e);
+				Log.d("Connectivity Error", "Unable to connect to iitkgp.ac.in", e);
+				return false;
 			}
 		} else {
 			Log.d("Error", "No network available!");
@@ -318,9 +322,7 @@ class CustomClasses {
 		if (!hasActiveInternetConnection(cContext)) {
 			Log.d("Network Error", "Error: No network connection :( ");
 			throw new Exception();
-		} else {
-			Log.d("Update", "Successfully able to connect to Google");
-		}
+		} 
 
 		// Initialize the httpClient, and set the cookieStore and
 		// localContext
@@ -330,8 +332,10 @@ class CustomClasses {
 		localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 
 		// Go to the ERP Home page to get any cookies
-		HttpGet home_page = new HttpGet(ERP_URL);
-		HttpResponse response = httpClient.execute(home_page, localContext);
+		
+		// Don't need to do this, it appears...
+//		HttpGet home_page = new HttpGet(ERP_URL);
+//		HttpResponse response = httpClient.execute(home_page, localContext);
 
 		// Then create a HttpPost object with the login data, and POST it
 		HttpPost login_post = new HttpPost(ERP_LOGIN_URL);
@@ -345,7 +349,7 @@ class CustomClasses {
 		nameValuePairs.add(new BasicNameValuePair("question_id", loginData.U));
 		login_post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-		response = httpClient.execute(login_post, localContext);
+		HttpResponse response = httpClient.execute(login_post, localContext);
 
 		// Now parse the response to get the weird POST data that finally
 		// redirects to ERP
