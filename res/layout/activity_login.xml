@@ -1,60 +1,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp" 
-    android:id="@+id/login_page"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/roll_no"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_gravity="center_vertical"
+        
         android:id="@+id/login_roll_no"
         android:inputType="textCapCharacters"
      />
-    
+    </LinearLayout>
+    <!-- 
+    android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+     -->
+     <LinearLayout
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_vertical"
+        
         android:id="@+id/login_password"
         android:inputType="textPassword"
     />
-    
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/security_question"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="center_vertical"
+        
         android:id="@+id/login_sq"
         android:inputType="textPassword"
         android:nextFocusDown="@+id/btnLogin"
     />
-    
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
     <CheckBox android:id="@+id/checkbox_show_login_cred"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_cred"
         android:onClick="onCheckboxClicked"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_vertical"
         
         />
-    
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
     <Button android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+        
                 android:text="@string/login"
                 android:onClick="login"
                 android:layout_gravity="center" />
@@ -63,9 +94,10 @@
         		style="?android:attr/progressBarStyleLarge" 
     			android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+        
                 android:visibility="gone"
                 android:layout_gravity="center"/>
-                
+    </LinearLayout>
+             
 
 </LinearLayout>

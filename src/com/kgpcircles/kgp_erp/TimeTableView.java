@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -17,10 +16,10 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -33,10 +32,10 @@ public class TimeTableView extends Activity {
 	private Context viewContext;
 	private boolean refreshing;
 	
-	@TargetApi(11)
+	
 	private void set_refreshing(boolean yes) {
 		refreshing = yes;
-		invalidateOptionsMenu();
+		ActivityCompat.invalidateOptionsMenu(this);
 	}
 
 	// An async task that calls TimeTable.update_time_table() to first update
@@ -94,8 +93,8 @@ public class TimeTableView extends Activity {
 		}
 	}
 
-	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
+	@TargetApi(16)
 	private void update_view(SubjectSlot[][] time_table) {
 
 		dayViews = new LinearLayout[5];
@@ -152,7 +151,6 @@ public class TimeTableView extends Activity {
 					shape.setColorFilter(res.getColor(subjectColor),
 							PorterDuff.Mode.MULTIPLY);
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-						Log.d("Update", "Running on Jellybean or higher");
 						slot.setBackground(shape);
 					}
 					else

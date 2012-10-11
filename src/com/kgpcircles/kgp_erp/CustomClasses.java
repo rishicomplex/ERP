@@ -263,13 +263,10 @@ class CustomClasses {
 	private static boolean hasActiveInternetConnection(Context context) {
 		if (isNetworkAvailable(context)) {
 			try {
-				HttpURLConnection urlc = (HttpURLConnection) (new URL(
-						"http://iitkgp.ac.in").openConnection());
-				urlc.setRequestProperty("User-Agent", "Test");
-				urlc.setRequestProperty("Connection", "close");
-				urlc.setConnectTimeout(15000);
-				urlc.connect();
-				if (urlc.getResponseCode() == 200) {
+				DefaultHttpClient httpClient = (DefaultHttpClient) getNewHttpClient();
+				HttpGet httpGet = new HttpGet("http://iitkgp.ac.in");
+				HttpResponse response = httpClient.execute(httpGet);
+				if (response.getStatusLine().getStatusCode() == 200) {
 					Log.d("Update", "Able to connect to iitkgp.ac.in");
 					return true;
 				}
