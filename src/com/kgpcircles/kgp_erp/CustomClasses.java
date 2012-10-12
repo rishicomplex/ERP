@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
 import java.net.Socket;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -22,7 +20,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -91,17 +92,56 @@ class SubjectSlot implements Serializable {
 
 class CustomClasses {
 
-	private static final String ERP_URL = "https://erp.iitkgp.ernet.in/";
+	private static final String ERP_URL = "https://10.57.5.10/";
+	private static final String IIT_URL = "http://203.110.245.243";
 	// "https://erp.iitkgp.ernet.in/IIT_ERP2";
-	private static final String ERP_REDIRECT_URL = "https://erp.iitkgp.ernet.in/IIT_ERP2/welcome.jsp";
-	private static final String ERP_LOGIN_URL = "https://erp.iitkgp.ernet.in/SSOAdministration/auth.htm";
-	private static final String ERP_LISTING = "https://erp.iitkgp.ernet.in/IIT_ERP2/welcome.jsp?module_id=16";
-	private static final String ERP_TIMETABLE_FORM = "https://erp.iitkgp.ernet.in/IIT_ERP2/welcome.jsp?module_id=16&menu_id=40";
-	private static final String ERP_TIMETABLE_VIEW = "https://erp.iitkgp.ernet.in/Acad/student/view_stud_time_table.jsp";
-	private static final String ERP_GET_SQ = "https://erp.iitkgp.ernet.in/SSOAdministration/getSecurityQuestion.htm?user_id=!USER_ID!&rand_id=0";
+	private static final String ERP_REDIRECT_URL = ERP_URL.concat("IIT_ERP2/welcome.jsp");
+	private static final String ERP_LOGIN_URL = ERP_URL.concat("SSOAdministration/auth.htm");
+	private static final String ERP_LISTING = ERP_URL.concat("IIT_ERP2/welcome.jsp?module_id=16");
+	private static final String ERP_TIMETABLE_FORM = ERP_URL.concat("IIT_ERP2/welcome.jsp?module_id=16&menu_id=40");
+	private static final String ERP_TIMETABLE_VIEW = ERP_URL.concat("Acad/student/view_stud_time_table.jsp");
+	private static final String ERP_GET_SQ = ERP_URL.concat("SSOAdministration/getSecurityQuestion.htm?user_id=!USER_ID!&rand_id=0");
 	public static final String TIME_TABLE_FILE = "time_table.dat";
 	public static final String LOGIN_FILE = "login_data.dat";
 	private static Context cContext;
+	
+	 // always verify the host - dont check for certificate
+    final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
+          public boolean verify(String hostname, SSLSession session) {
+              return true;
+          }
+   };
+
+
+    /**
+     * Trust every server - dont check for any certificate
+     */
+    private static void trustAllHosts() {
+              // Create a trust manager that does not validate certificate chains
+              TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+                      public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                              return new java.security.cert.X509Certificate[] {};
+                      }
+
+                      public void checkClientTrusted(X509Certificate[] chain,
+                                      String authType) throws CertificateException {
+                      }
+
+                      public void checkServerTrusted(X509Certificate[] chain,
+                                      String authType) throws CertificateException {
+                      }
+              } };
+
+              // Install the all-trusting trust manager
+              try {
+                      SSLContext sc = SSLContext.getInstance("TLS");
+                      sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                      HttpsURLConnection
+                                      .setDefaultSSLSocketFactory(sc.getSocketFactory());
+              } catch (Exception e) {
+                      e.printStackTrace();
+              }
+      }
 
 	// private static String PROXY_HOST = "http://144.16.192.247";
 	// private static Integer PROXY_PORT = 8080;
@@ -164,6 +204,12 @@ class CustomClasses {
 
 			ClientConnectionManager ccm = new ThreadSafeClientConnManager(
 					params, registry);
+			
+			// Set custom DNS
+			
+			System.setProperty("sun.net.spi.nameservice.nameservers", "144.16.192.55");
+			System.setProperty("sun.net.spi.nameservice.provider.1", "dns,sun");
+
 
 			// DefaultHttpClient rClient =
 			return new DefaultHttpClient(ccm, params);
@@ -264,7 +310,7 @@ class CustomClasses {
 		if (isNetworkAvailable(context)) {
 			try {
 				DefaultHttpClient httpClient = (DefaultHttpClient) getNewHttpClient();
-				HttpGet httpGet = new HttpGet("http://iitkgp.ac.in");
+				HttpGet httpGet = new HttpGet(IIT_URL);
 				HttpResponse response = httpClient.execute(httpGet);
 				if (response.getStatusLine().getStatusCode() == 200) {
 					Log.d("Update", "Able to connect to iitkgp.ac.in");
